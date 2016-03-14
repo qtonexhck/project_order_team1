@@ -1,0 +1,11 @@
+/configs/test360/test360/common/
+
+
+redis.ip=192.168.25.251
+
+redis.port=6379
+jedis.pool.maxActive=3000
+jedis.pool.maxIdle=1000
+jedis.pool.maxWait=1500
+jedis.pool.testOnBorrow=true
+jedis.pool.testOnReturn=true

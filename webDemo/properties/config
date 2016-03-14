@@ -1,0 +1,22 @@
+/startconfigs/test360/config                    DB连接信息、dubbo用zookeeper信息；
+jdbc_url=jdbc:mysql://192.168.25.251:3306/test_etgyd?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8
+jdbc_user=ggp_test
+jdbc_password=ggp_test
+dubbo_zk_url=zookeeper://192.168.25.251:2181
+redis.ip=127.0.0.1
+redis.port=6379
+redis.password=123456
+redis.database=1
+redis.timeout=3000
+redis.pool.testOnBorrow=true
+redis.pool.maxActive=40
+redis.pool.maxIdle=5
+redis.pool.maxWait=15000
+redis.commonExpiration=1000
+time.periodTime=1
+threadPool.maxThreadTime=30
+threadPool.corePoolSize=10
+threadPool.maxPoolSize=10
+guava.maximumSize=10000
+guava.expireAfterAccess=1s
+guava.expireAfterWrite=10s

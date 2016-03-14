@@ -1,0 +1,102 @@
+
+apply from: 'dependencies.gradle'
+
+allprojects {
+    group = 'com.test.plus360'
+    version = '0.0.1-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven-publish'
+//    apply plugin: 'maven-publish-auth'
+
+    repositories {
+        repositories { maven { url 'http://192.168.25.251:8981/nexus/content/groups/public/' } }
+        repositories { maven { url 'http://repo.thinkjoy.cn/content/groups/public/' } }
+        mavenLocal()
+//        mavenCentral()
+    }
+    sourceCompatibility = 1.7
+    //UTF-8 很重要
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.warnings = false
+    }
+//上传jar
+    uploadArchives {
+        repositories {
+            apply plugin: 'maven'
+            mavenDeployer {
+                snapshotRepository(url: "http://192.168.25.251:8981/nexus/content/repositories/snapshots/") {
+                    authentication(userName: "admin", password: "admin123")
+                }
+                repository(url: "http://192.168.25.251:8981/nexus/content/repositories/thirdparty/") {
+                    authentication(userName: "admin", password: "admin123")
+                }
+            }
+        }
+    }
+}
+
+subprojects{
+
+    task "createJavaProject" << {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+
+        /** 可选生成子文件夹 */
+        file("src/main/filters").mkdirs()
+        file("src/main/assembly").mkdirs()
+        file("src/main/config").mkdirs()
+        file("src/main/scripts").mkdirs()
+
+        /** 填充文件，便于git提交 */
+        file("src/main/java/cn/thinkjoy").mkdirs()
+        file("src/main/java/cn/thinkjoy/package-info.java").createNewFile()
+        file("src/main/resources").mkdirs()
+        file("src/main/resources/spring.xml").createNewFile()
+
+        file("src/test/java/cn/thinkjoy").mkdirs()
+        file("src/test/java/cn/thinkjoy/package-info.java").createNewFile()
+        file("src/test/resources/spring.xml").createNewFile()
+    }
+
+    /** 有时候会报错，但需要执行 */
+    // task createREADME(){
+    //      file("README.md").createNewFile()
+    // }
+
+    configurations {
+        provided
+        compile.extendsFrom provided
+
+        all*.exclude group: 'org.springframework', module: 'spring'
+        all*.exclude group: 'asm', module: 'asm'
+        //排除log4j桥接，只允许使用logback
+        all*.exclude group: 'log4j', module: 'log4j'
+        all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+
+        all*.exclude group:'com.easypoi',module:'easypoi-web'
+        all*.exclude group:'com.easypoi',module:'easypoi-base'
+    }
+
+    dependencies{
+        //都会依赖domain
+        compile group: "cn.thinkjoy.common", name: "thinkjoy-domain-common", version: "$thinkjoyCommonVersion", changing: true
+
+    }
+}
+configure(subprojects.findAll{it.name.contains('war')}){
+    apply plugin: 'war'
+
+    task createWebProject(dependsOn: 'createJavaProject') << {
+        def webAppDir = file("$webAppDirName")
+        webAppDir.mkdirs()
+
+        file("src/main/resources/config").mkdirs()
+        file("src/main/resources/config/main-conf.properties").createNewFile()
+        file("src/main/resources/config/metadata.properties").createNewFile()
+    }
+
+}
