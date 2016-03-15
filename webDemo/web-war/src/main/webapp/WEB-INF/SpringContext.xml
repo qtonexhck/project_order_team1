@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
 	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	   xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:context="http://www.springframework.org/schema/context"
 	   xmlns:task="http://www.springframework.org/schema/task" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	   xsi:schemaLocation="
+	   http://mybatis.org/schema/mybatis-spring      http://mybatis.org/schema/mybatis-spring.xsd
      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
@@ -28,9 +29,8 @@
 		</property>
 	</bean>
 
-	<!-- 注释配置 -->
 	<context:annotation-config />
-	<context:component-scan	base-package="com.test360" />
+	<context:component-scan	base-package="com.test360,cn.thinkjoy" />
 	<!-- 	开启这个配置，spring才能识别@Scheduled注解   -->
 	<task:executor id="executor" pool-size="5" />
 	<task:scheduler id="scheduler" pool-size="10" />
@@ -47,18 +47,29 @@
 	</mvc:annotation-driven>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!--默认的redis配置，启动时会建立连接-->
+	<import resource="classpath*:spring-redis.xml"/>
+
+
+	<!-- 进行事务控制 -->
+	<bean id="transactionManager"
+		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<!-- <property name="nestedTransactionAllowed" value="true" /> <property
+			name="validateExistingTransaction" value="true" /> -->
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
+
 
 	<!--  ***************************数据连接池********************************************************* -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 基本属性 url、user、password -->
-		<!--<property name="url" value="${jdbc_url}"/>-->
-		<!--<property name="username" value="${jdbc_user}"/>-->
-		<!--<property name="password" value="${jdbc_password}"/>-->
+		<property name="url" value="${jdbc_url}"/>
+		<property name="username" value="${jdbc_user}"/>
+		<property name="password" value="${jdbc_password}"/>
 
-
-		<property name="url" value="jdbc:mysql://192.168.25.251:3306/test_etgyd"/>
-		<property name="username" value="ggp_test"/>
-		<property name="password" value="ggp_test"/>
 
 		<!-- 配置初始化大小、最小、最大 -->
 		<property name="initialSize" value="1"/>
@@ -87,19 +98,9 @@
 		<property name="filters" value="stat"/>
 	</bean>
 
-	<!-- 进行事务控制 -->
-	<bean id="transactionManager"
-		  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
-		<!-- <property name="nestedTransactionAllowed" value="true" /> <property
-			name="validateExistingTransaction" value="true" /> -->
-	</bean>
-
-
-
-
-
-
+	<!-- 扫描basePackage下接口 自动生成代理实现类 -->
+	<!-- 自动加载对应的 数据访问层接口类 -->
+	<mybatis:scan base-package="com.test360.business,cn.thinkjoy.common.managerui.dao" factory-ref="sqlSessionFactory"/>
 
 	<!--Session工厂类的配置 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -113,13 +114,6 @@
 		</property>
 	</bean>
 
-	<!-- 自动加载对应的 数据访问层接口类 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.test360.business" />
-		<!-- <property name="markerInterface" value="lzserj.dao.mapper.MyBatisMapper"
-			/> -->
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-	</bean>
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
 		<property name="messageConverters">
