@@ -1,0 +1,25 @@
+apply plugin: 'java'
+apply plugin: 'war'
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile "org.freemarker:freemarker:$freemarkerVersion"
+    compile 'com.alibaba:fastjson:1.2.7'
+    compile group: "cn.thinkjoy.common", name: "thinkjoy-web-common", version: "$thinkjoyCommonVersion", changing: true
+    compile group: "cn.thinkjoy.common", name: "thinkjoy-mus-common", version: "$thinkjoyCommonVersion", changing: true
+    //自动注册自己到cmc
+    compile group: "cn.thinkjoy.cloudstack", name: "cs-clustermanager-client", version: "$thinkjoyCloudstackVersion", changing: true
+    compile 'servletapi:servlet-api:2.4'
+    compile "org.springframework:spring-webmvc:$springVersion"
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.6.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
+
+    compile 'commons-codec:commons-codec:1.6'
+
+    compile 'com.thoughtworks.xstream:xstream:1.4.4'
+    compile 'org.apache.httpcomponents:httpclient:4.3.4'
+    compile 'org.apache.velocity:velocity:1.6.4'
+    compile 'org.apache.velocity:velocity-tools:2.0'
+    compile 'org.daisy.libs:commons-httpclient:3.1.0'
+}

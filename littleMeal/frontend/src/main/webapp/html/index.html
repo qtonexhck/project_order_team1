@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="jumbotron">
+        <h1>欢迎加入前端开发</h1>
+        <p>前端开发主要使用了JavaScript、jQuery、Angularjs、Bootstrap、H5等技术<a href="http://www.runoob.com/" target="_blank">http://www.runoob.com/</a></p>
+        <p><a>1、路由介绍与项目配置</a>&nbsp;<a href="http://blog.csdn.net/mazhimazh/article/details/42524187" target="_blank">$stateProvider</a> </p>
+        <p><a>2、数据双向绑定，使用Loacl Storage保存数据，向服务器发送请求 </a></p>
+        <p><a>3、常用指令介绍</a></p>
+        ng_bind 	绑定 HTML 元素到应用程序数据。<br/>
+        ng_click 	定义元素被单击时的行为。<br/>
+        ng_model 	绑定应用程序数据到 HTML 元素。<br/>
+        $("#id).val()<br/>
+        ng_repeat 	为控制器中的每个数据定义一个模板。<br/>
+        ng_show 	显示或隐藏 HTML 元素。<br/>
+        <p><a>4、select数据绑定</a></p>
+        <p><a></a></p>
+    </div>
+    <form class="form-signin">
+        <h2 class="form-signin-heading">简单登录窗口</h2>
+        <label for="inputEmail" >帐号</label>
+        <input id="inputEmail" class="form-control" ng-model="user.account" placeholder="帐号" required="" autofocus="" type="text">
+        <label for="inputPassword" >密码</label>
+        <input id="inputPassword" class="form-control" ng-model="user.password" placeholder="密码" required="" type="password">
+        <div class="checkbox">
+            <label>
+                <input value="remember-me" type="checkbox" ng-model="user.saveme"> 记住我
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="button" ng-click="onLogin('aaa')">登录</button>
+    </form>
+
+</div> <!-- /container -->

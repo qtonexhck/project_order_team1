@@ -1,0 +1,17 @@
+<div class="jumbotron" style="text-align: center;">
+    <h1>Example1</h1>
+
+    <select class="form-control" ng-model="optaaaa1" ng-change="onChangeSel()" ng-bind="hello(model)"
+            style="width: auto;display: inline-table;"
+            ng-options="model.id as model.name  for model in list1"></select>
+
+
+    <div ng-show="opt1>0"><span ng-bind="currentName"></span></div>
+    <select>
+        <option>11</option>
+        <option>12</option>
+        <option>13</option>
+        <option>14</option>
+
+    </select>
+</div>

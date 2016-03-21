@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test360.business.dao.ManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.test360.business.model.Manager" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.name != null" >
+         and name like #{condition.name}
+      </if>
+      <if test="condition.name_greater != null" >
+         and name &gt;= #{condition.name_greater}
+      </if>
+      <if test="condition.name_less != null" >
+         and name &lt;= #{condition.name_less}
+      </if>
+      <if test="condition.name_notequal != null" >
+         and name &lt;&gt; #{condition.name_notequal}
+      </if>
+      <if test="condition.name_in != null" >
+         and name in 
+		<foreach collection="condition.name_in" item="name" open="(" separator="," close=")" >
+			#{name}
+		</foreach>
+      </if>
+      <if test="condition.password != null" >
+         and password like #{condition.password}
+      </if>
+      <if test="condition.password_greater != null" >
+         and password &gt;= #{condition.password_greater}
+      </if>
+      <if test="condition.password_less != null" >
+         and password &lt;= #{condition.password_less}
+      </if>
+      <if test="condition.password_notequal != null" >
+         and password &lt;&gt; #{condition.password_notequal}
+      </if>
+      <if test="condition.password_in != null" >
+         and password in 
+		<foreach collection="condition.password_in" item="password" open="(" separator="," close=")" >
+			#{password}
+		</foreach>
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, password
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.test360.business.model.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manager
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager
+    where id = #{id}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.test360.business.model.Criteria" >
+    delete from manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.test360.business.model.Manager" useGeneratedKeys="true" keyProperty="id" >
+    insert into manager (name, password)
+    values (#{name}, #{password})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test360.business.model.Manager" useGeneratedKeys="true" keyProperty="id" >
+    insert into manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="password != null" >
+        #{password},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.test360.business.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update manager
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update manager
+    set id = #{record.id},
+      name = #{record.name},
+      password = #{record.password}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test360.business.model.Manager" >
+    update manager
+    <set >
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="password != null" >
+        password = #{password},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test360.business.model.Manager" >
+    update manager
+    set name = #{name},
+      password = #{password}
+    where id = #{id}
+  </update>
+</mapper>

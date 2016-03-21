@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test360.business.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.test360.business.model.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="CHAR" />
+    <result column="balance" property="balance" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.number != null" >
+         and number like #{condition.number}
+      </if>
+      <if test="condition.number_greater != null" >
+         and number &gt;= #{condition.number_greater}
+      </if>
+      <if test="condition.number_less != null" >
+         and number &lt;= #{condition.number_less}
+      </if>
+      <if test="condition.number_notequal != null" >
+         and number &lt;&gt; #{condition.number_notequal}
+      </if>
+      <if test="condition.number_in != null" >
+         and number in 
+		<foreach collection="condition.number_in" item="number" open="(" separator="," close=")" >
+			#{number}
+		</foreach>
+      </if>
+      <if test="condition.name != null" >
+         and name like #{condition.name}
+      </if>
+      <if test="condition.name_greater != null" >
+         and name &gt;= #{condition.name_greater}
+      </if>
+      <if test="condition.name_less != null" >
+         and name &lt;= #{condition.name_less}
+      </if>
+      <if test="condition.name_notequal != null" >
+         and name &lt;&gt; #{condition.name_notequal}
+      </if>
+      <if test="condition.name_in != null" >
+         and name in 
+		<foreach collection="condition.name_in" item="name" open="(" separator="," close=")" >
+			#{name}
+		</foreach>
+      </if>
+      <if test="condition.wechat != null" >
+         and wechat like #{condition.wechat}
+      </if>
+      <if test="condition.wechat_greater != null" >
+         and wechat &gt;= #{condition.wechat_greater}
+      </if>
+      <if test="condition.wechat_less != null" >
+         and wechat &lt;= #{condition.wechat_less}
+      </if>
+      <if test="condition.wechat_notequal != null" >
+         and wechat &lt;&gt; #{condition.wechat_notequal}
+      </if>
+      <if test="condition.wechat_in != null" >
+         and wechat in 
+		<foreach collection="condition.wechat_in" item="wechat" open="(" separator="," close=")" >
+			#{wechat}
+		</foreach>
+      </if>
+      <if test="condition.phone != null" >
+         and phone = #{condition.phone}
+      </if>
+      <if test="condition.phone_greater != null" >
+         and phone &gt;= #{condition.phone_greater}
+      </if>
+      <if test="condition.phone_less != null" >
+         and phone &lt;= #{condition.phone_less}
+      </if>
+      <if test="condition.phone_notequal != null" >
+         and phone &lt;&gt; #{condition.phone_notequal}
+      </if>
+      <if test="condition.phone_in != null" >
+         and phone in 
+		<foreach collection="condition.phone_in" item="phone" open="(" separator="," close=")" >
+			#{phone}
+		</foreach>
+      </if>
+      <if test="condition.balance != null and condition.balance > -1" >
+         and balance = #{condition.balance}
+      </if>
+      <if test="condition.balance_greater != null" >
+         and balance &gt;= #{condition.balance_greater}
+      </if>
+      <if test="condition.balance_less != null" >
+         and balance &lt;= #{condition.balance_less}
+      </if>
+      <if test="condition.balance_notequal != null" >
+         and balance &lt;&gt; #{condition.balance_notequal}
+      </if>
+      <if test="condition.balance_in != null" >
+         and balance in 
+		<foreach collection="condition.balance_in" item="balance" open="(" separator="," close=")" >
+			#{balance}
+		</foreach>
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, number, name, wechat, phone, balance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.test360.business.model.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.test360.business.model.Criteria" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.test360.business.model.User" useGeneratedKeys="true" keyProperty="id" >
+    insert into user (number, name, wechat, phone, balance)
+    values (#{number}, #{name}, #{wechat}, #{phone}, #{balance})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test360.business.model.User" useGeneratedKeys="true" keyProperty="id" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="wechat != null" >
+        wechat,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="wechat != null" >
+        #{wechat},
+      </if>
+      <if test="phone != null" >
+        #{phone},
+      </if>
+      <if test="balance != null" >
+        #{balance},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.test360.business.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name},
+      </if>
+      <if test="record.wechat != null" >
+        wechat = #{record.wechat},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set id = #{record.id},
+      number = #{record.number},
+      name = #{record.name},
+      wechat = #{record.wechat},
+      phone = #{record.phone},
+      balance = #{record.balance}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test360.business.model.User" >
+    update user
+    <set >
+      <if test="number != null" >
+        number = #{number},
+      </if>
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="wechat != null" >
+        wechat = #{wechat},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test360.business.model.User" >
+    update user
+    set number = #{number},
+      name = #{name},
+      wechat = #{wechat},
+      phone = #{phone},
+      balance = #{balance}
+    where id = #{id}
+  </update>
+</mapper>
