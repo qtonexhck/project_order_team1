@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test360.business.dao.ConsumptionMapper" >
+  <resultMap id="BaseResultMap" type="com.test360.business.model.Consumption" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="money" property="money" jdbcType="INTEGER" />
+    <result column="userID" property="userid" jdbcType="INTEGER" />
+    <result column="meal" property="meal" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.area != null" >
+         and area like #{condition.area}
+      </if>
+      <if test="condition.area_greater != null" >
+         and area &gt;= #{condition.area_greater}
+      </if>
+      <if test="condition.area_less != null" >
+         and area &lt;= #{condition.area_less}
+      </if>
+      <if test="condition.area_notequal != null" >
+         and area &lt;&gt; #{condition.area_notequal}
+      </if>
+      <if test="condition.area_in != null" >
+         and area in 
+		<foreach collection="condition.area_in" item="area" open="(" separator="," close=")" >
+			#{area}
+		</foreach>
+      </if>
+      <if test="condition.time != null" >
+         and time like #{condition.time}
+      </if>
+      <if test="condition.time1 != null" >
+         and time &gt;= #{condition.time1}
+      </if>
+      <if test="condition.time2 != null" >
+         and time &lt;= #{condition.time2}
+      </if>
+      <if test="condition.money != null and condition.money > -1" >
+         and money = #{condition.money}
+      </if>
+      <if test="condition.money_greater != null" >
+         and money &gt;= #{condition.money_greater}
+      </if>
+      <if test="condition.money_less != null" >
+         and money &lt;= #{condition.money_less}
+      </if>
+      <if test="condition.money_notequal != null" >
+         and money &lt;&gt; #{condition.money_notequal}
+      </if>
+      <if test="condition.money_in != null" >
+         and money in 
+		<foreach collection="condition.money_in" item="money" open="(" separator="," close=")" >
+			#{money}
+		</foreach>
+      </if>
+      <if test="condition.userid != null and condition.userid > -1" >
+         and userID = #{condition.userid}
+      </if>
+      <if test="condition.userid_greater != null" >
+         and userID &gt;= #{condition.userid_greater}
+      </if>
+      <if test="condition.userid_less != null" >
+         and userID &lt;= #{condition.userid_less}
+      </if>
+      <if test="condition.userid_notequal != null" >
+         and userID &lt;&gt; #{condition.userid_notequal}
+      </if>
+      <if test="condition.userid_in != null" >
+         and userID in 
+		<foreach collection="condition.userid_in" item="userid" open="(" separator="," close=")" >
+			#{userid}
+		</foreach>
+      </if>
+      <if test="condition.meal != null" >
+         and meal like #{condition.meal}
+      </if>
+      <if test="condition.meal_greater != null" >
+         and meal &gt;= #{condition.meal_greater}
+      </if>
+      <if test="condition.meal_less != null" >
+         and meal &lt;= #{condition.meal_less}
+      </if>
+      <if test="condition.meal_notequal != null" >
+         and meal &lt;&gt; #{condition.meal_notequal}
+      </if>
+      <if test="condition.meal_in != null" >
+         and meal in 
+		<foreach collection="condition.meal_in" item="meal" open="(" separator="," close=")" >
+			#{meal}
+		</foreach>
+      </if>
+      <if test="condition.status != null" >
+         and status like #{condition.status}
+      </if>
+      <if test="condition.status_greater != null" >
+         and status &gt;= #{condition.status_greater}
+      </if>
+      <if test="condition.status_less != null" >
+         and status &lt;= #{condition.status_less}
+      </if>
+      <if test="condition.status_notequal != null" >
+         and status &lt;&gt; #{condition.status_notequal}
+      </if>
+      <if test="condition.status_in != null" >
+         and status in 
+		<foreach collection="condition.status_in" item="status" open="(" separator="," close=")" >
+			#{status}
+		</foreach>
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, area, time, money, userID, meal, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.test360.business.model.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from consumption
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from consumption
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from consumption
+    where id = #{id}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.test360.business.model.Criteria" >
+    delete from consumption
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.test360.business.model.Consumption" useGeneratedKeys="true" keyProperty="id" >
+    insert into consumption (area, time, money, userID, meal, status)
+    values (#{area}, #{time}, #{money}, #{userid}, #{meal}, #{status})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test360.business.model.Consumption" useGeneratedKeys="true" keyProperty="id" >
+    insert into consumption
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="userid != null" >
+        userID,
+      </if>
+      <if test="meal != null" >
+        meal,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="area != null" >
+        #{area},
+      </if>
+      <if test="time != null" >
+        #{time},
+      </if>
+      <if test="money != null" >
+        #{money},
+      </if>
+      <if test="userid != null" >
+        #{userid},
+      </if>
+      <if test="meal != null" >
+        #{meal},
+      </if>
+      <if test="status != null" >
+        #{status},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.test360.business.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from consumption
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update consumption
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.area != null" >
+        area = #{record.area},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money},
+      </if>
+      <if test="record.userid != null" >
+        userID = #{record.userid},
+      </if>
+      <if test="record.meal != null" >
+        meal = #{record.meal},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update consumption
+    set id = #{record.id},
+      area = #{record.area},
+      time = #{record.time},
+      money = #{record.money},
+      userID = #{record.userid},
+      meal = #{record.meal},
+      status = #{record.status}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test360.business.model.Consumption" >
+    update consumption
+    <set >
+      <if test="area != null" >
+        area = #{area},
+      </if>
+      <if test="time != null" >
+        time = #{time},
+      </if>
+      <if test="money != null" >
+        money = #{money},
+      </if>
+      <if test="userid != null" >
+        userID = #{userid},
+      </if>
+      <if test="meal != null" >
+        meal = #{meal},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test360.business.model.Consumption" >
+    update consumption
+    set area = #{area},
+      time = #{time},
+      money = #{money},
+      userID = #{userid},
+      meal = #{meal},
+      status = #{status}
+    where id = #{id}
+  </update>
+</mapper>

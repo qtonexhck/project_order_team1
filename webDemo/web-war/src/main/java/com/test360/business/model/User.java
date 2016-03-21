@@ -1,7 +1,6 @@
 package com.test360.business.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -12,18 +11,29 @@ public class User implements Serializable {
     private Integer id;
 
     /**
-     * 用户名
+     * 员工工号
+     */
+    private String number;
+
+    /**
+     * 员工姓名
      */
     private String name;
 
     /**
-     * 密码
+     * 员工微信号
      */
-    private String password;
+    private String wechat;
 
-    private Integer sex;
+    /**
+     * 员工手机号
+     */
+    private String phone;
 
-    private Date brithday;
+    /**
+     * 余额
+     */
+    private Integer balance;
 
     /**
      * @return id
@@ -41,7 +51,22 @@ public class User implements Serializable {
     }
 
     /**
-     * @return 用户名
+     * @return 员工工号
+     */
+    public String getNumber() {
+        return number;
+    }
+
+    /**
+     * @param number 
+	 *            员工工号
+     */
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    /**
+     * @return 员工姓名
      */
     public String getName() {
         return name;
@@ -49,47 +74,61 @@ public class User implements Serializable {
 
     /**
      * @param name 
-	 *            用户名
+	 *            员工姓名
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * @return 密码
+     * @return 员工微信号
      */
-    public String getPassword() {
-        return password;
+    public String getWechat() {
+        return wechat;
     }
 
     /**
-     * @param password 
-	 *            密码
+     * @param wechat 
+	 *            员工微信号
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
     }
 
-    public Integer getSex() {
-        return sex;
+    /**
+     * @return 员工手机号
+     */
+    public String getPhone() {
+        return phone;
     }
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    /**
+     * @param phone 
+	 *            员工手机号
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Date getBrithday() {
-        return brithday;
+    /**
+     * @return 余额
+     */
+    public Integer getBalance() {
+        return balance;
     }
 
-    public void setBrithday(Date brithday) {
-        this.brithday = brithday;
+    /**
+     * @param balance 
+	 *            余额
+     */
+    public void setBalance(Integer balance) {
+        this.balance = balance;
     }
 
     /**
      * java.lang.Object#toString()
      */
     public String toString() {
-        return "User [ id=" + id +",   name=" + name +",   password=" + password +",   sex=" + sex +",   brithday=" + brithday + " ] " ;
+        return "User [ id=" + id +",   number=" + number +",   name=" + name +",   wechat=" + wechat +",   phone=" + phone +",   balance=" + balance + " ] " ;
     }
 }

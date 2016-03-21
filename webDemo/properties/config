@@ -1,7 +1,7 @@
 /startconfigs/test360/config                    DB连接信息、dubbo用zookeeper信息；
-jdbc_url=jdbc:mysql://192.168.25.251:3306/test_etgyd?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8
-jdbc_user=ggp_test
-jdbc_password=ggp_test
+jdbc_url=jdbc:mysql://localhost:3306/littlemeal?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8
+jdbc_user=root
+jdbc_password=root
 dubbo_zk_url=zookeeper://192.168.25.251:2181
 redis.ip=127.0.0.1
 redis.port=6379

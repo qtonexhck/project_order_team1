@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test360.business.dao.RechargeableMapper" >
+  <resultMap id="BaseResultMap" type="com.test360.business.model.Rechargeable" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userID" property="userid" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="money" property="money" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.userid != null and condition.userid > -1" >
+         and userID = #{condition.userid}
+      </if>
+      <if test="condition.userid_greater != null" >
+         and userID &gt;= #{condition.userid_greater}
+      </if>
+      <if test="condition.userid_less != null" >
+         and userID &lt;= #{condition.userid_less}
+      </if>
+      <if test="condition.userid_notequal != null" >
+         and userID &lt;&gt; #{condition.userid_notequal}
+      </if>
+      <if test="condition.userid_in != null" >
+         and userID in 
+		<foreach collection="condition.userid_in" item="userid" open="(" separator="," close=")" >
+			#{userid}
+		</foreach>
+      </if>
+      <if test="condition.time != null" >
+         and time like #{condition.time}
+      </if>
+      <if test="condition.time1 != null" >
+         and time &gt;= #{condition.time1}
+      </if>
+      <if test="condition.time2 != null" >
+         and time &lt;= #{condition.time2}
+      </if>
+      <if test="condition.money != null and condition.money > -1" >
+         and money = #{condition.money}
+      </if>
+      <if test="condition.money_greater != null" >
+         and money &gt;= #{condition.money_greater}
+      </if>
+      <if test="condition.money_less != null" >
+         and money &lt;= #{condition.money_less}
+      </if>
+      <if test="condition.money_notequal != null" >
+         and money &lt;&gt; #{condition.money_notequal}
+      </if>
+      <if test="condition.money_in != null" >
+         and money in 
+		<foreach collection="condition.money_in" item="money" open="(" separator="," close=")" >
+			#{money}
+		</foreach>
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userID, time, money
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.test360.business.model.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rechargeable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from rechargeable
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from rechargeable
+    where id = #{id}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.test360.business.model.Criteria" >
+    delete from rechargeable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.test360.business.model.Rechargeable" useGeneratedKeys="true" keyProperty="id" >
+    insert into rechargeable (userID, time, money)
+    values (#{userid}, #{time}, #{money})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test360.business.model.Rechargeable" useGeneratedKeys="true" keyProperty="id" >
+    insert into rechargeable
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userID,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid},
+      </if>
+      <if test="time != null" >
+        #{time},
+      </if>
+      <if test="money != null" >
+        #{money},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.test360.business.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from rechargeable
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update rechargeable
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.userid != null" >
+        userID = #{record.userid},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update rechargeable
+    set id = #{record.id},
+      userID = #{record.userid},
+      time = #{record.time},
+      money = #{record.money}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test360.business.model.Rechargeable" >
+    update rechargeable
+    <set >
+      <if test="userid != null" >
+        userID = #{userid},
+      </if>
+      <if test="time != null" >
+        time = #{time},
+      </if>
+      <if test="money != null" >
+        money = #{money},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test360.business.model.Rechargeable" >
+    update rechargeable
+    set userID = #{userid},
+      time = #{time},
+      money = #{money}
+    where id = #{id}
+  </update>
+</mapper>

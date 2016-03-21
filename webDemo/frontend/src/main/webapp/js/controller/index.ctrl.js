@@ -37,7 +37,7 @@ Demoapp.controller("IndexCtrl", function ($rootScope, $scope,$http, Util, $state
         var defer = $q.defer();
         ////连接服务器
         //var url=SERVER.url.url+"/cross/login.do";
-        var url=SERVER.url.url+"/test/login";
+        var url=SERVER.url.url+"/test/test01";
         var jd=formatJson(jsonObjec);
         $http.post(url,jd)
             .success(function(result){
